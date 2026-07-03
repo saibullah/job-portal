@@ -1,30 +1,31 @@
 const User = require('../model/login.js')
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
-const register= async(req , res)=>{
-    try{
-        const {email,password}=req.body
-        const existingUser= await User.findOne({email})
-        if(existingUser){
-            return res.status(400).json({message:"user already exist"})
+
+const register = async (req, res) => {
+    try {
+        const { email, password } = req.body
+        const existingUser = await User.findOne({ email })
+        if (existingUser) {
+            return res.status(400).json({ message: "user already exist" })
         }
-        const hashpassword = await bcrypt.hash(password,10)
+        const hashpassword = await bcrypt.hash(password, 10)
         const user = await User.create({
             email,
-            password:hashpassword
+            password: hashpassword
         })
         res.status(201).json({
             message: "User registered successfully",
             user
         })
-    }catch(error){
+    } catch (error) {
         res.status(400).json(error)
     }
 }
 const login = async (req, res) => {
     try {
         const { email, password } = req.body
-
+ console.log("ACCESS_TOKEN:", process.env.ACCESS_TOKEN);
         // Find user
         const user = await User.findOne({ email })
 
@@ -33,7 +34,6 @@ const login = async (req, res) => {
                 message: "User not found"
             })
         }
-
         // Compare password
         const isMatch = await bcrypt.compare(password, user.password)
 
@@ -44,12 +44,13 @@ const login = async (req, res) => {
         }
 
         // Generate JWT Token
+        console.log("ACCESS_TOKEN:", process.env.ACCESS_TOKEN);
         const token = jwt.sign(
             {
                 id: user._id,
                 role: user.role
             },
-            process.env.JWT_SECRET,
+            process.env.ACCESS_TOKEN,
             {
                 expiresIn: "1d"
             }
@@ -66,4 +67,4 @@ const login = async (req, res) => {
         })
     }
 }
-module.exports={register , login}
+module.exports = { register, login }

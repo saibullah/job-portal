@@ -1,5 +1,10 @@
 const mongoose = require('mongoose')
 const enter = mongoose.Schema({
+   name : {
+    type: String,
+    required: true,
+      unique: true
+  },
   email: {
     type: String,
     required: true,
@@ -14,6 +19,5 @@ const enter = mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user'
   }
-
 })
 module.exports = mongoose.model("User", enter)

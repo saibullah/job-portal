@@ -7,14 +7,13 @@ dns.setServers(['1.1.1.1', '8.8.8.8'])
 const authroute = require('./routes/authroute')
 const jobroute = require('./routes/jobroute')
 const applicationRoute = require("./routes/applicationroute");
+const cors = require("cors")
 
-
-
+app.use(cors())
 app.use(express.json())
 app.use('/api/jobs',jobroute)
 app.use('/api/auth',authroute)
 app.use("/api/applications", applicationRoute);
-
 
 mongoose.connect("mongodb+srv://mohamedsaibullah:achsaibullah@cluster0.mkczn35.mongodb.net/?appName=Cluster0")
 .then(()=>{
@@ -28,7 +27,6 @@ mongoose.connect("mongodb+srv://mohamedsaibullah:achsaibullah@cluster0.mkczn35.m
 // app.get('/', (req,res)=>{
 // res.send("hello")
 // })
-app.listen(4000 , ()=>{
-    console.log("running");
-    
+app.listen(5000 , ()=>{
+    console.log("running on 5000");
 })

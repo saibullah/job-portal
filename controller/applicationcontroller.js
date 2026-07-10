@@ -21,7 +21,6 @@ const applyJob = async (req, res) => {
         });
     }
 };
-
 const myApplications = async (req, res) => {
     try {
         const applications = await Application.find({

@@ -13,11 +13,24 @@ const jobs = mongoose.Schema({
         required:true
     },
      salary:{
-        type:Number,
+        type:String,
         required:true
     },
     description:{
-        type:String
+        type:String,
+        required:true
+    },
+    skills:{
+        type:[String],
+        required:true
+    },
+    experience:{
+        type:String,
+        required:true
+    },
+    jobType:{
+        type:String,
+        required:true
     }
 })
 module.exports = mongoose.model("Job",jobs)

@@ -5,6 +5,16 @@ const applyJob = async (req, res) => {
     try {
         const { jobId } = req.params;
 
+        const userId = req.user.id
+        const existingApplication = await Application.findOne({
+            user : userId,
+            job :jobId,
+        })
+        if (existingApplication){
+            return res.status(400).json({
+                message:"Job Already Applied"
+            })
+        }
         const application = await Application.create({
             user: req.user.id,
             job: jobId
@@ -20,21 +30,21 @@ const applyJob = async (req, res) => {
             message: error.message
         });
     }
-};
-const myApplications = async (req, res) => {
-    try {
-        const applications = await Application.find({
-            user: req.user.id
-        }).populate("job");
+    };
+    const myApplications = async (req, res) => {
+        try {
+            const applications = await Application.find({
+                user: req.user.id
+            }).populate("job");
 
-        res.status(200).json(applications);
+            res.status(200).json(applications);
 
-    } catch (error) {
-        res.status(500).json({
-            message: error.message
-        });
-    }
-};
+        } catch (error) {
+            res.status(500).json({
+                message: error.message
+            });
+        }
+    };
 
 const getApplicants = async (req, res) => {
     try {

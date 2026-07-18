@@ -15,7 +15,7 @@ app.use('/api/jobs',jobroute)
 app.use('/api/auth',authroute)
 app.use("/api/applications", applicationRoute);
 
-mongoose.connect("mongodb+srv://mohamedsaibullah:achsaibullah@cluster0.mkczn35.mongodb.net/?appName=Cluster0")
+mongoose.connect(process.env.Mongodb)
 .then(()=>{
     console.log("connected");    
 })

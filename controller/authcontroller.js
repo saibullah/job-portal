@@ -28,7 +28,6 @@ const login = async (req, res) => {
     try {
         const { email, password } = req.body
  console.log("ACCESS_TOKEN:", process.env.ACCESS_TOKEN);
-        // Find user
         const user = await User.findOne({ email })
 
         if (!user) {
@@ -36,7 +35,6 @@ const login = async (req, res) => {
                 message: "User not found"
             })
         }
-        // Compare password
         const isMatch = await bcrypt.compare(password, user.password)
 
         if (!isMatch) {
@@ -45,8 +43,6 @@ const login = async (req, res) => {
             })
         }
 
-        // Generate JWT Token
-        console.log("ACCESS_TOKEN:", process.env.ACCESS_TOKEN);
         const token = jwt.sign(
             {
                 id: user._id,

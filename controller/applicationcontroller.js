@@ -52,7 +52,8 @@ const getApplicants = async (req, res) => {
 
         const applicants = await Application.find({
             job: jobId
-        }).populate("user");
+        }).populate("user")
+        .populate("job");
 
         res.status(200).json(applicants);
 
